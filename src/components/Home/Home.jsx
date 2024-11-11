@@ -8,7 +8,8 @@ function Home() {
     const statistics = {
         users: 120,
         services: 45,
-        notifications: 230
+        notifications: 230,
+        reservations: 500,
     };
 
     const userChartData = {
@@ -46,12 +47,25 @@ function Home() {
             }
         ]
     };
+    const reservationsChartData = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+            {
+                label: 'Reservations recieved',
+                data: [20, 40, 60, 80, 150, 230],
+                borderColor: 'rgba(220, 53, 69 , 0.85)',
+                backgroundColor: 'rgba(220 ,53 ,69 ,0.2)'
+            }
+        ]
+    };
+
+    
 
     return (
         <div className="container-fluid p-4">
             <h1 className="mb-4">Dashboard</h1>
             <div className="row">
-                <div className="col-md-4">
+                <div className="col-md-3">
                     <div className="card text-white bg-primary mb-3">
                         <div className="card-body">
                             <h5 className="card-title">Users</h5>
@@ -59,7 +73,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                     <div className="card text-white bg-success mb-3">
                         <div className="card-body">
                             <h5 className="card-title">Services</h5>
@@ -67,28 +81,40 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                     <div className="card text-white bg-warning mb-3">
                         <div className="card-body">
-                            <h5 className="card-title">Notifications Sent</h5>
+                            <h5 className="card-title">Notifications</h5>
                             <p className="card-text display-4">{statistics.notifications}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-3">
+                    <div className="card text-white bg-danger mb-3">
+                        <div className="card-body">
+                            <h5 className="card-title">Reservations</h5>
+                            <p className="card-text display-4">{statistics.reservations}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div className="row mt-4">
-                <div className="col-md-4">
+                <div className="col-md-6 mt-5">
                     <h4>Users Over Time</h4>
                     <Line data={userChartData} />
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-6 mt-5">
                     <h4>Services Over Time</h4>
                     <Line data={serviceChartData} />
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-6 mt-5">
                     <h4>Notifications Sent Over Time</h4>
                     <Line data={notificationChartData} />
+                </div>
+                <div className="col-md-6 mt-5">
+                    <h4>Reservations Recieved Over Time</h4>
+                    <Line data={reservationsChartData} />
                 </div>
             </div>
         </div>

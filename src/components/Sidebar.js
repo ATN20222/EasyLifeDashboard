@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import './Sidebar.css'
 
-function Sidebar({ isCollapsed, setIsCollapsed }) {
+function Sidebar({ isCollapsed, setIsCollapsed ,onLogout}) {
     const toggleSidebar = () => {
         setIsCollapsed(!isCollapsed);
     };
@@ -14,7 +14,7 @@ function Sidebar({ isCollapsed, setIsCollapsed }) {
             {!isCollapsed ? (
                 <div className="sidebar-heading text-center text-white mt-4">EasyLife</div>
             ) : (
-                <div className="mt-5 mb-5 h-25"></div>
+                <div className="mt-5 mb-5 h-15"></div>
             )}
             <ul className="nav flex-column mt-4">
                 <li className="nav-item">
@@ -25,6 +25,11 @@ function Sidebar({ isCollapsed, setIsCollapsed }) {
                 <li className="nav-item">
                     <Link to="/services" className={`nav-link text-white ${isCollapsed ? "text-center" : ''}`}>
                         <i className="fa-solid fa-hand-holding-dollar me-2"></i> <span className={isCollapsed ? 'd-none' : ''}>Services</span>
+                    </Link>
+                </li>   
+                <li className="nav-item">
+                    <Link to="/reservations" className={`nav-link text-white ${isCollapsed ? "text-center" : ''}`}>
+                        <i className="fa-solid fa-book me-2"></i> <span className={isCollapsed ? 'd-none' : ''}>Rservations</span>
                     </Link>
                 </li>   
                 <li className="nav-item">
@@ -50,7 +55,7 @@ function Sidebar({ isCollapsed, setIsCollapsed }) {
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/login" className={`nav-link text-white ${isCollapsed ? "text-center" : ''}`}>
+                    <Link to="/" className={`nav-link text-white ${isCollapsed ? "text-center" : ''}`} onClick={onLogout}>
                         <i className="fas fa-sign-in-alt me-2"></i> <span className={isCollapsed ? 'd-none' : ''}>Logout</span>
                     </Link>
                 </li>
