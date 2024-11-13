@@ -94,7 +94,11 @@ textarea.form-control {
 }
 
 
-
+.Toast{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 .Center{
   display: flex;
   justify-content: center;

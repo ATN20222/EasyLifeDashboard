@@ -42,36 +42,6 @@ function App() {
     };
 
 
-    useEffect(() => {
-        // Define the async function to make the API call
-        const fetchData = async () => {
-          try {
-            const response = await fetch('https://yellowgreen-raccoon-480548.hostingersite.com/api/point/systems',{
-                method: 'GET',
-                headers: {
-                  'Accept': 'application/json',
-                  'Database-App': 'mind',  // Replace 'mind' with the actual value if needed
-                  'Content-Type': 'multipart/form-data',
-                },
-              });
-            if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            
-            const result = await response.json();
-            // setData(result); // Set the retrieved data in the component's state
-            console.log("API Response:", result); // Log the data
-          } catch (error) {
-            // setError(error.message); // Set the error message in case of failure
-            console.error("Error fetching data:", error);
-          }
-        };
-    
-        // Call the function
-        fetchData();
-      }, []);
-
-
 
     return (
         <Router>
@@ -80,7 +50,7 @@ function App() {
                 <div className={`${!isAuthenticated ? 'w-100' : `content-area p-3 ${!isCollapsed ? 'expanded' : ''}`}`}>
                     {isAuthenticated && <TopNavbar onLogout={handleLogout} />}
                     <Routes>
-                        <Route path="/login" element={!isAuthenticated ? <Login onLogin={handleLogin}/> : <Navigate to="/" />} />
+                        <Route path="/login" element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to="/" />} />
 
                         <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated}><Home /></PrivateRoute>} />
                         <Route path="/home" element={<PrivateRoute isAuthenticated={isAuthenticated}><Home /></PrivateRoute>} />

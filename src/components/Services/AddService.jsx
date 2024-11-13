@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './Services.css';
+import axios from 'axios';
+import { ServicesService } from '../../Services/Api';
 
 function AddService() {
     const [serviceData, setServiceData] = useState({
@@ -8,7 +10,9 @@ function AddService() {
         titleAR: '',
         descriptionEN: '',
         descriptionAR: '',
-        status: 'active',
+        status: true,
+        price: '',
+        imageUrl:'imageurl',
     });
 
     const [errors, setErrors] = useState({});
@@ -29,14 +33,37 @@ function AddService() {
         if (!serviceData.titleAR) newErrors.titleAR = 'Title (AR) is required';
         if (!serviceData.descriptionEN) newErrors.descriptionEN = 'Description (EN) is required';
         if (!serviceData.descriptionAR) newErrors.descriptionAR = 'Description (AR) is required';
+        if (!serviceData.price) newErrors.price = 'Price is required';
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validate()) {
-            console.log('Service Added:', serviceData);
+            try {
+                
+
+                const response = await ServicesService.Add(serviceData);
+                console.log('Service Added:', response);
+            } catch (error) {
+                console.error('Error adding service:', error);
+            }
+        }
+    };
+
+    // Function to send the form data to the backend
+    const addService = async (formData) => {
+        try {
+            const response = await axios.post('/api/services', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Make sure the backend handles FormData
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error adding service:', error);
+            throw new Error(error.response?.data?.message || 'Error adding service');
         }
     };
 
@@ -70,10 +97,26 @@ function AddService() {
                     {errors.descriptionAR && <div className="text-danger">{errors.descriptionAR}</div>}
                 </div>
                 <div className="mb-3">
+                    <label className="form-label">Price</label>
+                    <input
+                        type="number"
+                        name="price"
+                        className="form-control"
+                        onChange={handleInputChange}
+                        value={serviceData.price}
+                    />
+                    {errors.price && <div className="text-danger">{errors.price}</div>}
+                </div>
+                <div className="mb-3">
                     <label className="form-label">Status</label>
-                    <select name="status" className="form-select" onChange={handleInputChange} value={serviceData.status}>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
+                    <select
+                        name="status"
+                        className="form-select"
+                        onChange={handleInputChange}
+                        value={serviceData.status}
+                    >
+                        <option value={true}>Active</option>
+                        <option value={false}>Inactive</option>
                     </select>
                 </div>
                 <button type="submit" className="btn btn-primary">Add Service</button>

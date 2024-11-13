@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
+import { AuthService } from '../../Services/Api';
+import toast from 'react-hot-toast';
 
 function Login({ onLogin }) {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -10,23 +12,22 @@ function Login({ onLogin }) {
         setCredentials({ ...credentials, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        
+        setError(null);  
         // Check for empty fields
         if (!credentials.email || !credentials.password) {
             setError('Both email and password are required');
             return;
         }
-
-        // Simulate login logic
-        if (credentials.email === 'antonabdalla30@gmail.com' && credentials.password === 'password') {
-            console.log('Logged in successfully');
-            setError(null);  // Clear any previous error
-            onLogin();       // Trigger the login function to set authentication
-        } else {
-            setError('Invalid username or password');
+        try {
+            const response  = await AuthService.Login(credentials.email , credentials.password)
+            onLogin();     
+        } catch (error) {
+            setError('Invalid username or password')
         }
+
+        
     };
 
     return (
