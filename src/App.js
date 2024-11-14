@@ -60,9 +60,11 @@ function App() {
                         <Route path="/News" element={<PrivateRoute isAuthenticated={isAuthenticated}><News /></PrivateRoute>} />
                         <Route path="/News/edit/:id" element={<PrivateRoute isAuthenticated={isAuthenticated}><EditNews /></PrivateRoute>} />
                         <Route path="/News/add" element={<PrivateRoute isAuthenticated={isAuthenticated}><AddNews /></PrivateRoute>} />
-                        <Route path="/Coupons" element={<PrivateRoute isAuthenticated={isAuthenticated}><Coupon /></PrivateRoute>} />
+
+                        {/* <Route path="/Coupons" element={<PrivateRoute isAuthenticated={isAuthenticated}><Coupon /></PrivateRoute>} />
                         <Route path="/Coupons/add" element={<PrivateRoute isAuthenticated={isAuthenticated}><AddCoupon /></PrivateRoute>} />
                         <Route path="/Coupons/edit/:id" element={<PrivateRoute isAuthenticated={isAuthenticated}><EditCoupon /></PrivateRoute>} />
+                         */}
                         <Route path="/Users" element={<PrivateRoute isAuthenticated={isAuthenticated}><Users /></PrivateRoute>} />
                         <Route path="/Notifications" element={<PrivateRoute isAuthenticated={isAuthenticated}><Notifications /></PrivateRoute>} />
                         <Route path="/Notifications/add" element={<PrivateRoute isAuthenticated={isAuthenticated}><AddNotification /></PrivateRoute>} />

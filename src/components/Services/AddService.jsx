@@ -52,20 +52,6 @@ function AddService() {
         }
     };
 
-    // Function to send the form data to the backend
-    const addService = async (formData) => {
-        try {
-            const response = await axios.post('/api/services', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data', // Make sure the backend handles FormData
-                },
-            });
-            return response.data;
-        } catch (error) {
-            console.error('Error adding service:', error);
-            throw new Error(error.response?.data?.message || 'Error adding service');
-        }
-    };
 
     return (
         <div className="container-fluid p-4">

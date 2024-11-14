@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-// import './News.css';
+import { NewsService } from '../../Services/Api'; // Assuming NewsService has methods to add news
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function AddNews() {
     const [newsData, setNewsData] = useState({
@@ -9,7 +11,7 @@ function AddNews() {
         descriptionEN: '',
         descriptionAR: '',
     });
-
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
 
     const handleInputChange = (e) => {
@@ -32,15 +34,26 @@ function AddNews() {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validate()) {
-            console.log('News Added:', newsData);
+            try {
+                const response = await NewsService.Add(newsData); 
+                console.log('News Added:', response);
+                toast.success(response.message);
+                setTimeout(() => {
+                    navigate('/news')
+                }, 2000);
+            } catch (error) {
+                console.error('Error adding news:', error);
+                toast.error('Error adding news');
+            }
         }
     };
 
     return (
         <div className="container-fluid p-4">
+            <Toaster position="top-right" reverseOrder={false} />
             <h1>Add News</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">

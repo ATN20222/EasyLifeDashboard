@@ -43,11 +43,11 @@ function Sidebar({ isCollapsed, setIsCollapsed ,onLogout}) {
                     </Link>
                 </li>
 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <Link to="/coupons" className={`nav-link text-white ${isCollapsed ? "text-center" : ''}`}>
                         <i className="fa-solid fa-ticket me-2"></i> <span className={isCollapsed ? 'd-none' : ''}>Coupons</span>
                     </Link>
-                </li>
+                </li> */}
 
                 <li className="nav-item">
                     <Link to="/notifications" className={`nav-link text-white ${isCollapsed ? "text-center" : ''}`}>

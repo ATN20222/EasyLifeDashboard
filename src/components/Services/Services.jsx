@@ -28,7 +28,7 @@ function Services() {
     }
     async function confirmDelete(id) {
         try {
-            const response = await ServicesService.Delete(id); // Pass file along with service data
+            const response = await ServicesService.Delete(id); 
                 console.log('Service Updated:', response);
                 getData();
                 toast.success(response.message);

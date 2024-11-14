@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ReservationsService } from '../../Services/Api';
 
 function Reservations() {
-    const reservations = [
-        { id: 1, serviceName: 'Spa Treatment', clientName: 'John Doe', date: '2024-11-15' },
-        { id: 2, serviceName: 'Personal Training', clientName: 'Jane Smith', date: '2024-11-16' },
-        // Additional reservations as needed
-    ];
+    const [reservations, setReservations] = useState([]);
+    const [loading, setLoading] = useState(true); 
+
+    useEffect(() => {
+        getReservations();
+    }, []);
+
+    const getReservations = async () => {
+        try {
+            const response = await ReservationsService.List();
+            setReservations(response.data);
+            setLoading(false); 
+        } catch (error) {
+            console.error('Error fetching reservations:', error);
+            setLoading(false); 
+        }
+    };
+
+    if (loading) {
+        return <div>Loading...</div>; 
+    }
 
     return (
         <div className="container-fluid p-4">
@@ -26,9 +43,9 @@ function Reservations() {
                         {reservations.map(reservation => (
                             <tr key={reservation.id}>
                                 <td>{reservation.id}</td>
-                                <td>{reservation.serviceName}</td>
-                                <td>{reservation.clientName}</td>
-                                <td>{reservation.date}</td>
+                                <td>{reservation.service.nameEn}</td>
+                                <td>{reservation.userName}</td>
+                                <td>{reservation.reservationTime}</td>
                                 <td>
                                     <Link to={`/reservations/edit/${reservation.id}`} className="btn btn-warning">
                                         <i className="fas fa-pen"></i>
