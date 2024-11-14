@@ -281,11 +281,44 @@ const ReservationsService = {
 
 }
 
+const UsersService = {
+    List: async () => {
+        try {
+            const response = await axiosInstance.get(`/Users/Retrieve`);
+            return response.data;
+        } catch (error) {
+            throw new Error(error.response.data.message);
+        }
+    },
+    
+    Ban: async (id) => {
+        try {
+            const response = await axiosInstance.post(`/Users/Ban/${id}`);
+            return response.data;
+        } catch (error) {
+            console.log(error)
+            throw new Error(error.response.data);
+        }
+    },
+    UnBan: async (id) => {
+        try {
+            const response = await axiosInstance.post(`/Users/Unban/${id}`);
+            return response.data;
+        } catch (error) {
+            console.log(error)
+            throw new Error(error.response.data);
+        }
+    },
+
+}
+
+
 
 export {
     AuthService,
     ServicesService,
     NewsService,
     NotificationsService,
-    ReservationsService
+    ReservationsService,
+    UsersService
 }
