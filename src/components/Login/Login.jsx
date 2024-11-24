@@ -14,6 +14,7 @@ function Login({ onLogin }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("hello")
         setError(null);  
         // Check for empty fields
         if (!credentials.email || !credentials.password) {

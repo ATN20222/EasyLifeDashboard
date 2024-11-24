@@ -24,6 +24,7 @@ function Services() {
             setServices(response.data);
         } catch (error) {
             console.error(error);
+            
         }
     }
     async function confirmDelete(id) {

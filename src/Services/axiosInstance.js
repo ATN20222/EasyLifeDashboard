@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 
 // ---------- Const Variables ---------- //
-const baseURL = 'https://localhost:7201/api';
+const baseURL = 'http://easylife.runasp.net/api/';
 const cookie = new Cookies();
 
 // ---------- Functions ---------- //
