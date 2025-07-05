@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ServicesService } from '../../Services/Api';
 import toast, { Toaster } from 'react-hot-toast';
 
 function Services() {
+    const { t } = useTranslation();
     // const services = [
     //     { id: 1, title: 'Service 1', price: '$100' ,status:0 },
     //     { id: 2, title: 'Service 2', price: '$200' ,status:1 },
@@ -49,18 +51,18 @@ function Services() {
                 />
             </div>
             <div className="d-flex justify-content-between align-items-center">
-                <h1 className='m-0'>Services</h1>
-                <NavLink to='/services/add' className='btn btn-dark Center'>Add New</NavLink>
+                <h1 className='m-0'>{t('services')}</h1>
+                <NavLink to='/services/add' className='btn btn-dark Center'>{t('addService')}</NavLink>
             </div>
             <div className="table-responsive">
                 <table className="table table-hover mt-4">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>{t('serviceName')}</th>
+                            <th>{t('servicePrice')}</th>
+                            <th>{t('userStatus')}</th>
+                            <th>{t('edit')}</th>
+                            <th>{t('delete')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,7 +70,7 @@ function Services() {
                             <tr key={service.id}>
                                 <td>{service.nameEn}</td>
                                 <td>{service.price}</td>
-                                <td>{service.status?'Active':'In Active'}</td>
+                                <td>{service.status ? t('active') : t('inactive')}</td>
                                 <td>
                                     <Link to={`/services/edit/${service.id}`} className="btn btn-warning">
                                         <i className="fas fa-pen"></i>
@@ -95,18 +97,18 @@ function Services() {
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title">Confirm Delete</h5>
+                                <h5 className="modal-title">{t('confirmDelete')}</h5>
                                 <button type="button" className="btn-close" onClick={()=>setShowConfirm(false)}></button>
                             </div>
                             <div className="modal-body">
-                                <p>Are you sure you want to delete {selectedService?.nameEn}?</p>
+                                <p>{t('confirmDelete')} {selectedService?.nameEn}?</p>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" onClick={()=>setShowConfirm(false)}>
-                                    Cancel
+                                    {t('cancel')}
                                 </button>
                                 <button type="button" className="btn btn-danger" onClick={()=>confirmDelete(selectedService.id)}>
-                                    Confirm
+                                    {t('yes')}
                                 </button>
                             </div>
                         </div>

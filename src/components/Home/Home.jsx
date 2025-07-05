@@ -1,10 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function Home() {
+    const { t } = useTranslation();
+    
     const statistics = {
         users: 120,
         services: 45,
@@ -63,12 +66,12 @@ function Home() {
 
     return (
         <div className="container-fluid p-4">
-            <h1 className="mb-4">Dashboard</h1>
+            <h1 className="mb-4">{t('dashboard')}</h1>
             <div className="row">
                 <div className="col-md-3">
                     <div className="card text-white bg-primary mb-3">
                         <div className="card-body">
-                            <h5 className="card-title">Users</h5>
+                            <h5 className="card-title">{t('users')}</h5>
                             <p className="card-text display-4">{statistics.users}</p>
                         </div>
                     </div>
@@ -76,7 +79,7 @@ function Home() {
                 <div className="col-md-3">
                     <div className="card text-white bg-success mb-3">
                         <div className="card-body">
-                            <h5 className="card-title">Services</h5>
+                            <h5 className="card-title">{t('services')}</h5>
                             <p className="card-text display-4">{statistics.services}</p>
                         </div>
                     </div>
@@ -84,7 +87,7 @@ function Home() {
                 <div className="col-md-3">
                     <div className="card text-white bg-warning mb-3">
                         <div className="card-body">
-                            <h5 className="card-title">Notifications</h5>
+                            <h5 className="card-title">{t('notifications')}</h5>
                             <p className="card-text display-4">{statistics.notifications}</p>
                         </div>
                     </div>
@@ -92,7 +95,7 @@ function Home() {
                 <div className="col-md-3">
                     <div className="card text-white bg-danger mb-3">
                         <div className="card-body">
-                            <h5 className="card-title">Reservations</h5>
+                            <h5 className="card-title">{t('reservations')}</h5>
                             <p className="card-text display-4">{statistics.reservations}</p>
                         </div>
                     </div>
@@ -101,19 +104,19 @@ function Home() {
 
             <div className="row mt-4">
                 <div className="col-md-6 mt-5">
-                    <h4>Users Over Time</h4>
+                    <h4>{t('users')} Over Time</h4>
                     <Line data={userChartData} />
                 </div>
                 <div className="col-md-6 mt-5">
-                    <h4>Services Over Time</h4>
+                    <h4>{t('services')} Over Time</h4>
                     <Line data={serviceChartData} />
                 </div>
                 <div className="col-md-6 mt-5">
-                    <h4>Notifications Sent Over Time</h4>
+                    <h4>{t('notifications')} Sent Over Time</h4>
                     <Line data={notificationChartData} />
                 </div>
                 <div className="col-md-6 mt-5">
-                    <h4>Reservations Recieved Over Time</h4>
+                    <h4>{t('reservations')} Received Over Time</h4>
                     <Line data={reservationsChartData} />
                 </div>
             </div>

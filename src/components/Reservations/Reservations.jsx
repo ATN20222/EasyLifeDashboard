@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ReservationsService } from '../../Services/Api';
 
 function Reservations() {
+    const { t } = useTranslation();
     const [reservations, setReservations] = useState([]);
     const [loading, setLoading] = useState(true); 
 
@@ -13,7 +15,8 @@ function Reservations() {
     const getReservations = async () => {
         try {
             const response = await ReservationsService.List();
-            setReservations(response.data);
+
+            setReservations(response.data.reverse());
             setLoading(false); 
         } catch (error) {
             console.error('Error fetching reservations:', error);
@@ -21,22 +24,22 @@ function Reservations() {
         }
     };
 
-    if (loading) {
-        return <div>Loading...</div>; 
+        if (loading) {
+        return <div>{t('loading')}</div>;
     }
 
     return (
         <div className="container-fluid p-4">
-            <h1 className="mb-4">Reservations</h1>
+            <h1 className="mb-4">{t('reservations')}</h1>       
             <div className="table-responsive">
                 <table className="table table-hover mt-4">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Service Name</th>
-                            <th>Client Name</th>
-                            <th>Date</th>
-                            <th>Edit</th>
+                            <th>{t('serviceName')}</th>
+                            <th>{t('customerName')}</th>
+                            <th>{t('reservationDate')}</th>
+                            <th>{t('edit')}</th>
                         </tr>
                     </thead>
                     <tbody>

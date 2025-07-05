@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import toast, { Toaster } from 'react-hot-toast';
 import { NotificationsService } from '../../Services/Api';
 import { useNavigate } from 'react-router-dom';
 
 function AddNotification() {
+    const { t } = useTranslation();
     const [notificationData, setNotificationData] = useState({
         title: '',
         description: '',
@@ -19,8 +21,8 @@ function AddNotification() {
 
     const validate = () => {
         const newErrors = {};
-        if (!notificationData.title) newErrors.title = 'Title is required';
-        if (!notificationData.description) newErrors.description = 'Description is required';
+        if (!notificationData.title) newErrors.title = t('notificationTitle') + ' ' + t('isRequired');
+        if (!notificationData.description) newErrors.description = t('notificationMessage') + ' ' + t('isRequired');
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -47,7 +49,7 @@ function AddNotification() {
                     navigate('/notifications')
                 }, 2000);
             } catch (error) {
-                toast.error('Error adding notification');
+                toast.error(t('notificationAddedError'));
             }
         }
     };
@@ -55,10 +57,10 @@ function AddNotification() {
     return (
         <div className="container-fluid p-4">
             <Toaster position="top-right" reverseOrder={false} />
-            <h1>Add Notification</h1>
+            <h1>{t('addNotification')}</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label className="form-label">Title</label>
+                    <label className="form-label">{t('notificationTitle')}</label>
                     <input 
                         type="text" 
                         name="title" 
@@ -68,7 +70,7 @@ function AddNotification() {
                     {errors.title && <div className="text-danger">{errors.title}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Description</label>
+                    <label className="form-label">{t('notificationMessage')}</label>
                     <textarea 
                         name="description" 
                         className="form-control" 
@@ -76,7 +78,7 @@ function AddNotification() {
                     ></textarea>
                     {errors.description && <div className="text-danger">{errors.description}</div>}
                 </div>
-                <button type="submit" className="btn btn-primary">Send Notification</button>
+                <button type="submit" className="btn btn-primary">{t('sendNotification')}</button>
             </form>
         </div>
     );

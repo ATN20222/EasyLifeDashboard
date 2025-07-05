@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { NotificationsService } from '../../Services/Api';
 
 function Notifications() {
+    const { t } = useTranslation();
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
@@ -21,16 +23,16 @@ function Notifications() {
     return (
         <div className="container-fluid p-4">
             <div className="d-flex justify-content-between align-items-center">
-                <h1 className="m-0">Notifications</h1>
-                <NavLink to="/notifications/add" className="btn btn-dark Center">Add New</NavLink>
+                <h1 className="m-0">{t('notifications')}</h1>
+                <NavLink to="/notifications/add" className="btn btn-dark Center">{t('addNotification')}</NavLink>
             </div>
             <div className="table-responsive">
                 <table className="table table-hover mt-4">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Time</th>
+                            <th>{t('notificationTitle')}</th>
+                            <th>{t('notificationMessage')}</th>
+                            <th>{t('time')}</th>
                         </tr>
                     </thead>
                     <tbody>

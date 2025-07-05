@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { NewsService } from '../../Services/Api'; // Assuming NewsService has methods to fetch and update news
 import toast, { Toaster } from 'react-hot-toast';
 
 function EditNews() {
+    const { t } = useTranslation();
     const [newsData, setNewsData] = useState({
         image: null,
         titleEN: '',
@@ -45,10 +47,10 @@ function EditNews() {
 
     const validate = () => {
         const newErrors = {};
-        if (!newsData.titleEN) newErrors.titleEN = 'Title (EN) is required';
-        if (!newsData.titleAR) newErrors.titleAR = 'Title (AR) is required';
-        if (!newsData.descriptionEN) newErrors.descriptionEN = 'Description (EN) is required';
-        if (!newsData.descriptionAR) newErrors.descriptionAR = 'Description (AR) is required';
+        if (!newsData.titleEN) newErrors.titleEN = t('newsTitle') + ' (EN) ' + t('isRequired');
+        if (!newsData.titleAR) newErrors.titleAR = t('newsTitle') + ' (AR) ' + t('isRequired');
+        if (!newsData.descriptionEN) newErrors.descriptionEN = t('newsContent') + ' (EN) ' + t('isRequired');
+        if (!newsData.descriptionAR) newErrors.descriptionAR = t('newsContent') + ' (AR) ' + t('isRequired');
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -69,11 +71,11 @@ function EditNews() {
     return (
         <div className="container-fluid p-4">
             <Toaster position="top-right" reverseOrder={false} />
-            <h1>Edit News</h1>
+            <h1>{t('editNews')}</h1>
             <form onSubmit={handleSubmit}>
                 {newsData.imageUrl && (
                     <div className="mb-3">
-                        <label className="form-label">Current Image</label>
+                        <label className="form-label">{t('currentImage')}</label>
                         <div>
                             <img src={newsData.imageUrl} alt="Current News" className="img-fluid" style={{ maxWidth: '200px' }} />
                         </div>
@@ -81,26 +83,26 @@ function EditNews() {
                 )}
 
                 <div className="mb-3">
-                    <label className="form-label">News Image</label>
+                    <label className="form-label">{t('newsImage')}</label>
                     <input type="file" className="form-control" onChange={handleImageChange} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Title (EN)</label>
+                    <label className="form-label">{t('newsTitle')} (EN)</label>
                     <input type="text" name="titleEN" className="form-control" onChange={handleInputChange} value={newsData.titleEN} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Title (AR)</label>
+                    <label className="form-label">{t('newsTitle')} (AR)</label>
                     <input type="text" name="titleAR" className="form-control" onChange={handleInputChange} value={newsData.titleAR} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Description (EN)</label>
+                    <label className="form-label">{t('newsContent')} (EN)</label>
                     <textarea name="descriptionEN" className="form-control" onChange={handleInputChange} value={newsData.descriptionEN}></textarea>
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Description (AR)</label>
+                    <label className="form-label">{t('newsContent')} (AR)</label>
                     <textarea name="descriptionAR" className="form-control" onChange={handleInputChange} value={newsData.descriptionAR}></textarea>
                 </div>
-                <button type="submit" className="btn btn-primary">Save Changes</button>
+                <button type="submit" className="btn btn-primary">{t('save')}</button>
             </form>
         </div>
     );

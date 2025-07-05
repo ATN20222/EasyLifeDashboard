@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './Services.css';
 import { ServicesService } from '../../Services/Api';
 import { useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 
 function EditService() {
+    const { t } = useTranslation();
     const [serviceData, setServiceData] = useState({
         titleEN: '',
         titleAR: '',
@@ -52,11 +54,11 @@ function EditService() {
 
     const validate = () => {
         const newErrors = {};
-        if (!serviceData.titleEN) newErrors.titleEN = 'Title (EN) is required';
-        if (!serviceData.titleAR) newErrors.titleAR = 'Title (AR) is required';
-        if (!serviceData.descriptionEN) newErrors.descriptionEN = 'Description (EN) is required';
-        if (!serviceData.descriptionAR) newErrors.descriptionAR = 'Description (AR) is required';
-        if (!serviceData.price) newErrors.price = 'Price is required';
+        if (!serviceData.titleEN) newErrors.titleEN = t('serviceName') + ' (EN) ' + t('isRequired');
+        if (!serviceData.titleAR) newErrors.titleAR = t('serviceName') + ' (AR) ' + t('isRequired');
+        if (!serviceData.descriptionEN) newErrors.descriptionEN = t('serviceDescription') + ' (EN) ' + t('isRequired');
+        if (!serviceData.descriptionAR) newErrors.descriptionAR = t('serviceDescription') + ' (AR) ' + t('isRequired');
+        if (!serviceData.price) newErrors.price = t('servicePrice') + ' ' + t('isRequired');
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -85,12 +87,12 @@ function EditService() {
                     reverseOrder={false}
                 />
             </div>
-            <h1>Edit Service</h1>
+            <h1>{t('editService')}</h1>
             <form onSubmit={handleSubmit}>
                 {/* Display the current image */}
                 {serviceData.imageUrl && (
                     <div className="mb-3">
-                        <label className="form-label">Current Image</label>
+                        <label className="form-label">{t('currentImage')}</label>
                         <div>
                             <img
                                 src={serviceData.imageUrl}
@@ -103,13 +105,13 @@ function EditService() {
                 )}
 
                 <div className="mb-3">
-                    <label className="form-label">Service Image</label>
+                    <label className="form-label">{t('serviceImage')}</label>
                     <input type="file" className="form-control" onChange={handleImageChange} />
                     {errors.image && <div className="text-danger">{errors.image}</div>}
                 </div>
 
                 <div className="mb-3">
-                    <label className="form-label">Title (EN)</label>
+                    <label className="form-label">{t('serviceName')} (EN)</label>
                     <input
                         type="text"
                         name="titleEN"
@@ -120,7 +122,7 @@ function EditService() {
                     {errors.titleEN && <div className="text-danger">{errors.titleEN}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Title (AR)</label>
+                    <label className="form-label">{t('serviceName')} (AR)</label>
                     <input
                         type="text"
                         name="titleAR"
@@ -131,7 +133,7 @@ function EditService() {
                     {errors.titleAR && <div className="text-danger">{errors.titleAR}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Description (EN)</label>
+                    <label className="form-label">{t('serviceDescription')} (EN)</label>
                     <textarea
                         name="descriptionEN"
                         className="form-control"
@@ -141,7 +143,7 @@ function EditService() {
                     {errors.descriptionEN && <div className="text-danger">{errors.descriptionEN}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Description (AR)</label>
+                    <label className="form-label">{t('serviceDescription')} (AR)</label>
                     <textarea
                         name="descriptionAR"
                         className="form-control"
@@ -151,7 +153,7 @@ function EditService() {
                     {errors.descriptionAR && <div className="text-danger">{errors.descriptionAR}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Price</label>
+                    <label className="form-label">{t('servicePrice')}</label>
                     <input
                         type="number"
                         name="price"
@@ -162,19 +164,19 @@ function EditService() {
                     {errors.price && <div className="text-danger">{errors.price}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Status</label>
+                    <label className="form-label">{t('userStatus')}</label>
                     <select
                         name="status"
                         className="form-select"
                         onChange={handleInputChange}
                         value={serviceData.status}
                     >
-                        <option value={true}>Active</option>
-                        <option value={false}>Inactive</option>
+                        <option value={true}>{t('active')}</option>
+                        <option value={false}>{t('inactive')}</option>
                     </select>
                 </div>
                 <button type="submit" className="btn btn-primary">
-                    Save Changes
+                    {t('save')}
                 </button>
             </form>
         </div>

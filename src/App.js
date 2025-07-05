@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Sidebar from './components/Sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './App.css';
 import './Responsive.css';
+import './i18n';
 import Services from './components/Services/Services';
 import EditService from './components/Services/EditService';
 import AddService from './components/Services/AddService';
@@ -25,6 +27,7 @@ import Login from './components/Login/Login';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
+    const { i18n } = useTranslation();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(
         JSON.parse(localStorage.getItem('isAuthenticated')) || false
@@ -40,6 +43,11 @@ function App() {
         localStorage.removeItem('isAuthenticated');
         window.location.reload();
     };
+
+    // Set document language attribute
+    useEffect(() => {
+        document.documentElement.lang = i18n.language;
+    }, [i18n.language]);
 
 
 

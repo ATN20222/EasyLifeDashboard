@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './Services.css';
 import axios from 'axios';
 import { ServicesService } from '../../Services/Api';
+import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 function AddService() {
+    const { t } = useTranslation();
     const [serviceData, setServiceData] = useState({
         image: null,
         titleEN: '',
@@ -28,62 +32,67 @@ function AddService() {
 
     const validate = () => {
         const newErrors = {};
-        if (!serviceData.image) newErrors.image = 'Image is required';
-        if (!serviceData.titleEN) newErrors.titleEN = 'Title (EN) is required';
-        if (!serviceData.titleAR) newErrors.titleAR = 'Title (AR) is required';
-        if (!serviceData.descriptionEN) newErrors.descriptionEN = 'Description (EN) is required';
-        if (!serviceData.descriptionAR) newErrors.descriptionAR = 'Description (AR) is required';
-        if (!serviceData.price) newErrors.price = 'Price is required';
+        if (!serviceData.image) newErrors.image = t('serviceImage') + ' ' + t('isRequired');
+        if (!serviceData.titleEN) newErrors.titleEN = t('serviceName') + ' (EN) ' + t('isRequired');
+        if (!serviceData.titleAR) newErrors.titleAR = t('serviceName') + ' (AR) ' + t('isRequired');
+        if (!serviceData.descriptionEN) newErrors.descriptionEN = t('serviceDescription') + ' (EN) ' + t('isRequired');
+        if (!serviceData.descriptionAR) newErrors.descriptionAR = t('serviceDescription') + ' (AR) ' + t('isRequired');
+        if (!serviceData.price) newErrors.price = t('servicePrice') + ' ' + t('isRequired');
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validate()) {
             try {
-                
+
 
                 const response = await ServicesService.Add(serviceData);
-                console.log('Service Added:', response);
+                if(response.status === true){
+                    toast.success(t('serviceAdded'));   
+                    navigate('/services');
+                }
             } catch (error) {
-                console.error('Error adding service:', error);
+                toast.error(t('serviceAddedError'));
             }
         }
     };
 
 
     return (
-        <div className="container-fluid p-4">
-            <h1>Add Service</h1>
+        <div className="container-fluid p-4">   
+            <h1>{t('addService')}</h1>
+            <Toaster position="top-right" reverseOrder={false} />
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label className="form-label">Service Image</label>
+                    <label className="form-label">{t('serviceImage')}</label>
                     <input type="file" className="form-control" onChange={handleImageChange} />
                     {errors.image && <div className="text-danger">{errors.image}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Title (EN)</label>
+                    <label className="form-label">{t('serviceName')} (EN)</label>
                     <input type="text" name="titleEN" className="form-control" onChange={handleInputChange} />
                     {errors.titleEN && <div className="text-danger">{errors.titleEN}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Title (AR)</label>
+                    <label className="form-label">{t('serviceName')} (AR)</label>
                     <input type="text" name="titleAR" className="form-control" onChange={handleInputChange} />
                     {errors.titleAR && <div className="text-danger">{errors.titleAR}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Description (EN)</label>
+                    <label className="form-label">{t('serviceDescription')} (EN)</label>
                     <textarea name="descriptionEN" className="form-control" onChange={handleInputChange}></textarea>
                     {errors.descriptionEN && <div className="text-danger">{errors.descriptionEN}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Description (AR)</label>
+                    <label className="form-label">{t('serviceDescription')} (AR)</label>
                     <textarea name="descriptionAR" className="form-control" onChange={handleInputChange}></textarea>
                     {errors.descriptionAR && <div className="text-danger">{errors.descriptionAR}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Price</label>
+                    <label className="form-label">{t('servicePrice')}</label>
                     <input
                         type="number"
                         name="price"
@@ -94,18 +103,18 @@ function AddService() {
                     {errors.price && <div className="text-danger">{errors.price}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Status</label>
+                    <label className="form-label">{t('userStatus')}</label>
                     <select
                         name="status"
                         className="form-select"
                         onChange={handleInputChange}
                         value={serviceData.status}
                     >
-                        <option value={true}>Active</option>
-                        <option value={false}>Inactive</option>
+                        <option value={true}>{t('active')}</option>
+                        <option value={false}>{t('inactive')}</option>
                     </select>
                 </div>
-                <button type="submit" className="btn btn-primary">Add Service</button>
+                <button type="submit" className="btn btn-primary">{t('addService')}</button>
             </form>
         </div>
     );

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './Login.css';
 import { AuthService } from '../../Services/Api';
 import toast from 'react-hot-toast';
 
 function Login({ onLogin }) {
+    const { t } = useTranslation();
     const [credentials, setCredentials] = useState({ email: '', password: '' });
     const [error, setError] = useState(null);
 
@@ -18,14 +20,14 @@ function Login({ onLogin }) {
         setError(null);  
         // Check for empty fields
         if (!credentials.email || !credentials.password) {
-            setError('Both email and password are required');
+            setError(t('loginError'));
             return;
         }
         try {
             const response  = await AuthService.Login(credentials.email , credentials.password)
             onLogin();     
         } catch (error) {
-            setError('Invalid username or password')
+            setError(t('loginError'))
         }
 
         
@@ -34,10 +36,10 @@ function Login({ onLogin }) {
     return (
         <div className="login-container">
             <form onSubmit={handleSubmit} className="login-form">
-                <h2 className="login-title">Login to Dashboard</h2>
+                <h2 className="login-title">{t('login')}</h2>
                 {error && <p className="error-message">{error}</p>}
                 <div className="input-group">
-                    <label htmlFor="username">Email</label>
+                    <label htmlFor="username">{t('email')}</label>
                     <input
                         type="email"
                         id="email"
@@ -48,7 +50,7 @@ function Login({ onLogin }) {
                     />
                 </div>
                 <div className="input-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">{t('password')}</label>
                     <input
                         type="password"
                         id="password"
@@ -58,7 +60,7 @@ function Login({ onLogin }) {
                         // required
                     />
                 </div>
-                <button type="submit" className="login-button">Login</button>
+                <button type="submit" className="login-button">{t('loginButton')}</button>
             </form>
         </div>
     );
